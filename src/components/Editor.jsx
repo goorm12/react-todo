@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./Editor.css";
+
 const Editor = ({ onCreate }) => {
   const [content, setContent] = useState("");
+  const contentRef = useRef();
 
   const onChangeContent = (e) => {
     setContent(e.target.value);
@@ -9,12 +11,20 @@ const Editor = ({ onCreate }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (content === "") {
+      contentRef.current.focus();
+      return;
+    }
+
     onCreate(content);
+
+    setContent("");
   };
   return (
     <div className="Editor">
       <form onSubmit={onSubmit}>
         <input
+          ref={contentRef}
           value={content}
           onChange={onChangeContent}
           type="text"
