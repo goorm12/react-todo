@@ -11,7 +11,9 @@ const Editor = ({ onCreate }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    const $input = document.querySelector(".input");
     if (content === "") {
+      $input.placeholder = "할 일 을 입력해주세요!";
       contentRef.current.focus();
       return;
     }
@@ -19,6 +21,7 @@ const Editor = ({ onCreate }) => {
     onCreate(content);
 
     setContent("");
+    $input.placeholder = "새로운 Todo...";
   };
   return (
     <div className="Editor">
@@ -29,6 +32,7 @@ const Editor = ({ onCreate }) => {
           onChange={onChangeContent}
           type="text"
           placeholder="새로운 Todo..."
+          className="input"
         />
         <button>추가</button>
       </form>
