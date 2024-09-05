@@ -33,6 +33,10 @@ function reducer(state, action) {
       return state.map((item) =>
         item.id === action.targetId ? { ...item, isDone: !item.isDone } : item
       );
+    case "DELETE":
+      return state.filter((item) => item.id !== action.targetId);
+    default:
+      return state;
   }
 }
 
@@ -60,8 +64,10 @@ function App() {
   };
 
   const onDelete = (targetId) => {
-    // 인수: todos 배열에서 targetId와 일치하는 id를 갖는 요소만 삭제한 새로운 배열
-    setTodos(todos.filter((todo) => todo.id !== targetId));
+    dispatch({
+      type: "DELETE",
+      targetId: targetId,
+    });
   };
   return (
     <div className="App">
